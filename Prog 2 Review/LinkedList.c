@@ -57,6 +57,26 @@ void insertSorted (LIST *L, int elem) {
     }
 }
 
+void deleteFirst(LIST *L) {
+    if (*L == NULL) {
+        printf("List is empty.");
+        return;
+    }
+    LIST temp = *L;
+    *L = temp->link;
+    free(temp);
+}
+
+void deleteElem(LIST *L, int elem) {
+    LIST *trav, temp;
+    for (trav = L; *trav != NULL && (*trav)->data != elem; trav = &(*trav)->link) {}
+    if (*trav != NULL) {
+        temp = *trav;
+        *trav = temp->link;
+        free(temp);
+    }
+}
+
 int main(void) {
     printf("iss linked lists\n");
 
@@ -67,11 +87,16 @@ int main(void) {
     //insertFirst(&list, 2);
     insertFirst(&list, 3);
     insertLast(&list, 0);
-    insertLast(&list, 0);
+    insertLast(&list, -1);
     insertLast(&list, 1);
     //insertFirst(&list, 4);
     insertFirst(&list, 5);
     insertSorted(&list, 4);
     insertSorted(&list, 2);
+
+    deleteFirst(&list);
+    deleteElem(&list, 2);
+    deleteElem(&list, 0);
+
     displayList(list);
 }
