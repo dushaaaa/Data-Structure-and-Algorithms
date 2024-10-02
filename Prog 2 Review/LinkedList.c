@@ -23,11 +23,11 @@ void insertFirst(LIST *L, int elem) {
     for(trav = L; *trav != NULL && (*trav)->data != elem; trav = &(*trav)->link) {}
     if (*trav == NULL) {
         LIST newNode = (LIST)malloc(sizeof(struct node));
-    if (newNode != NULL) {
-        newNode->data = elem;
-        newNode->link = *L;
-        *L = newNode;
-    }
+        if (newNode != NULL) {
+            newNode->data = elem;
+            newNode->link = *L;
+            *L = newNode;
+        }
     }
     
 }
