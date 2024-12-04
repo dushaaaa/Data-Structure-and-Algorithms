@@ -53,7 +53,10 @@ void displayAdjList(directedAdjList L);
    printf("\n------------"); 
    
    //Write the code for main here
-   
+	directedAdjList L;
+
+   L = populateDirectedAdjList();
+   displayAdjList(L);
   
  
  return 0;
@@ -81,7 +84,7 @@ directedAdjList populateDirectedAdjList()
 	directedAdjList list;
     initDirectedAdjList(&list);
 
-	const int COUNT = 14;
+	const int COUNT = 15;
     edgeType data[] =     {  {'A', 'E', 6}, {'C', 'A', 4}, { 'E', 'C' , 6 },
                              {'A', 'F', 3}, {'C', 'D', 6}, { 'E', 'F' , 6 },
                              {'B', 'A', 4}, {'D', 'A', 8}, { 'F', 'B' , 3 },
@@ -98,9 +101,17 @@ directedAdjList populateDirectedAdjList()
 		int weight = data[i].weight;
 
 		for(trav = &(list.head[tail - 'A']); *trav != NULL && (*trav)->info.adjVertex <= head; trav = &(*trav)->link) {}
-		if(*trav != NULL && )
+		
+		temp = (AdjList)malloc(sizeof(struct adjNode));
+		if(temp != NULL) {
+			temp->info.adjVertex = head;
+			temp->info.weight = weight;
+			temp->link = *trav;
+			*trav = temp;
+		}
+		list.edgeCount++;
 	}
-	 
+	 return list;
 }
 
 void displayAdjList(directedAdjList L)
@@ -115,6 +126,14 @@ void displayAdjList(directedAdjList L)
 	printf("%-20s", "-----------------");
  
 	//Write your code here 
+	for(x = 0; x < MAX_VERTEX; x++) {
+		printf("\n  %c ::", 'A' + x);
+		if(L.head[x] != NULL) {
+			for(temp = L.head[x]; temp != NULL; temp = temp->link) {
+				printf(" %c (%d)\t", temp->info.adjVertex, temp->info.weight);
+			}
+		}
+	}
 	 
 	printf("\n\nPress any key to continue ... ");
 
